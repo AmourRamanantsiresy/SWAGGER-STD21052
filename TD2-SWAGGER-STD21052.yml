@@ -1,21 +1,8 @@
 openapi: 3.0.1
 info:
-  title: STD21065-TD2
+  title: STD21052-TD2
   description: TD2
-  termsOfService: http://swagger.io/terms/
-  contact:
-    email: apiteam@swagger.io
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/HEIMAHEFA/std-21065/1.0.0
 tags:
   - name: Room
   - name: Film

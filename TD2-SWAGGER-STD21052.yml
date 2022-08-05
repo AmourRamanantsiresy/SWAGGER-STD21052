@@ -3,12 +3,36 @@ info:
   title: STD21052-TD2
   description: TD2
   version: 1.0.0
+servers:
+  - url: http://STD21052.com
+
 tags:
+  - name: Calendar
   - name: Room
   - name: Film
   - name: Projection
   - name: Category
 paths:
+  /calendars:
+    get:
+      tags:
+        - "Calendar"
+      summary: get the film screening schedule
+      description: get the calendar of the week of the indicated date
+      operationId: getCalendar
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  monday:
+                    $ref: "#/components/schemas/Projection_per_day"
+                  tuesday:
+                    $ref: "#/components/schemas/Projection_per_day"
+
   /rooms:
     get:
       tags:
@@ -591,27 +615,41 @@ components:
             - 1
             - 2
             - 3
-    NewProjection:
+
+    Projection_on_Calendar:
       type: object
       properties:
-        hour:
+        film:
+          $ref: "#/components/schemas/Film"
+        room:
+          $ref: "#/components/schemas/Room"
+
+    NewProjection:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Projection_on_Calendar"
+      properties:
+        hours:
           type: string
           format: date-time
-          example: 01:20:32
-        film_id:
-          type: string
-          example: 20
-        room_id:
-          type: string
-          enum:
-            - A
-            - B
+
     Projection:
-      allOf:
-        - $ref: "#/components/schemas/Film"
-        - $ref: "#/components/schemas/Room"
       type: object
+      allOf:
+        - $ref: "#/components/schemas/NewProjection"
       properties:
         projection_id:
           type: number
           example: 1
+    Projection_per_day:
+      type: array
+      items:
+        type: object
+        properties:
+          projection_hours:
+            type: string
+            format: date-time
+          projections:
+            type: array
+            items:
+              $ref: "#/components/schemas/Projection_on_Calendar"

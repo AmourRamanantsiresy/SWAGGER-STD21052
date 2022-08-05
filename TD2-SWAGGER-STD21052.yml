@@ -20,6 +20,14 @@ paths:
       summary: get the film screening schedule
       description: get the calendar of the week of the indicated date
       operationId: getCalendar
+      parameters:
+        - name: date
+          in: query
+          description: if you don't specify the date, you'll get the projection schedule for this week.
+          schema:
+            type: string
+            format: date
+            example: 2020-05-05
       responses:
         200:
           description: Success
@@ -32,6 +40,9 @@ paths:
                     $ref: "#/components/schemas/Projection_per_day"
                   tuesday:
                     $ref: "#/components/schemas/Projection_per_day"
+        400:
+          description: Error
+          content: {}
 
   /rooms:
     get:
